@@ -251,12 +251,59 @@ class _WebViewExampleState extends State<WebViewExample> {
     }
   }
 
+  int _selectedIndex = 0;
+  // static const TextStyle optionStyle =
+  //     TextStyle(fontSize: 28, fontWeight: FontWeight.bold);
+  // static const List<Widget> _widgetOptions = <Widget>[
+  //   Text(
+  //     'Index 0: Help',
+  //     style: null,
+  //   ),
+  //   Text(
+  //     'Index 1: Near Me',
+  //     style: null,
+  //   ),
+  //   Text(
+  //     'Index 2: Sign In',
+  //     style: null,
+  //   ),
+  //   Text(
+  //     'Index 3: Guidelines',
+  //     style: null,
+  //   ),
+  //   Text(
+  //     'Index 4: About',
+  //     style: null,
+  //   ),
+  // ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    // ThemeData(
+    //   bottomNavigationBarTheme: BottomNavigationBarThemeData(
+    //     backgroundColor: Colors.grey[900],
+    //     elevation: 10,
+    //     selectedLabelStyle: const TextStyle(
+    //         color: Color.fromARGB(255, 8, 8, 8),
+    //         fontFamily: 'Montserrat',
+    //         fontSize: 14.0),
+    //     unselectedLabelStyle: TextStyle(
+    //         color: Colors.grey[600], fontFamily: 'Montserrat', fontSize: 12.0),
+    //     selectedItemColor: const Color(0xFFA67926),
+    //     unselectedItemColor: Colors.grey[600],
+    //     showUnselectedLabels: true,
+    //   ),
+    // );
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        toolbarHeight: 60,
+        toolbarHeight: 70,
         centerTitle: true,
         shadowColor: Colors.white,
         elevation: 0, // remove the shadow
@@ -305,8 +352,86 @@ class _WebViewExampleState extends State<WebViewExample> {
           gestureNavigationEnabled: true,
           backgroundColor: const Color(0x00000000),
           geolocationEnabled: true, // set geolocationEnable true or not
+          zoomEnabled: false,
         );
       }),
+
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.help),
+            label: 'Help',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.location_on_outlined),
+            label: 'Near Me',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.lock_outline),
+            label: 'Sign In',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.star_outline_outlined),
+            label: 'Guidelines',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.error_outline),
+            label: 'About',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        // unselectedItemColor: Colors.blueGrey.shade300,
+        // selectedItemColor: Colors.green.shade600,
+        selectedFontSize: 13,
+        unselectedFontSize: 13,
+        iconSize: 28,
+        onTap: _onItemTapped,
+        type: BottomNavigationBarType.fixed,
+      ),
+      // bottomNavigationBar: Theme(
+      //   data: Theme.of(context).copyWith(
+      //       // sets the background color of the `BottomNavigationBar`
+      //       canvasColor: Colors.green,
+      //       // sets the active color of the `BottomNavigationBar` if `Brightness` is light
+      //       primaryColor: Colors.red,
+      //       textTheme: Theme.of(context).textTheme.copyWith(
+      //           caption: const TextStyle(
+      //               color: Colors
+      //                   .yellow))), // sets the inactive color of the `BottomNavigationBar`
+      //   child: BottomNavigationBar(
+      //     currentIndex: _selectedIndex,
+      //     unselectedItemColor: Colors.blueGrey.shade300,
+      //     selectedItemColor: Colors.green.shade600,
+      //     selectedFontSize: 13,
+      //     unselectedFontSize: 13,
+      //     iconSize: 28,
+      //     onTap: _onItemTapped,
+      //     type: BottomNavigationBarType.fixed,
+      //     items: const <BottomNavigationBarItem>[
+      //       BottomNavigationBarItem(
+      //         icon: Icon(Icons.help),
+      //         label: 'Help',
+      //       ),
+      //       BottomNavigationBarItem(
+      //         icon: Icon(Icons.location_on_outlined),
+      //         label: 'Near Me',
+      //       ),
+      //       BottomNavigationBarItem(
+      //         icon: Icon(Icons.lock_outline),
+      //         label: 'Sign In',
+      //       ),
+      //       BottomNavigationBarItem(
+      //         icon: Icon(Icons.star_outline_outlined),
+      //         label: 'Guidelines',
+      //       ),
+      //       BottomNavigationBarItem(
+      //         icon: Icon(Icons.error_outline),
+      //         label: 'About',
+      //       ),
+      //     ],
+      //   ),
+      // ),
+
       // floatingActionButton: favoriteButton(),
     );
   }
