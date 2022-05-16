@@ -177,7 +177,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_webview_pro/webview_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 
-void main() => runApp(MaterialApp(home: WebViewExample()));
+void main() => runApp(const MaterialApp(
+    home: WebViewExample(), debugShowCheckedModeBanner: false));
 
 const String kNavigationExamplePage = '''
 <!DOCTYPE html><html>
@@ -235,6 +236,8 @@ const String kTransparentBackgroundPage = '''
 ''';
 
 class WebViewExample extends StatefulWidget {
+  const WebViewExample({Key? key}) : super(key: key);
+
   @override
   _WebViewExampleState createState() => _WebViewExampleState();
 }
@@ -359,32 +362,40 @@ class _WebViewExampleState extends State<WebViewExample> {
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.help),
+            activeIcon: Icon(Icons.help_rounded),
+            icon: Icon(Icons.help_outline),
             label: 'Help',
           ),
           BottomNavigationBarItem(
+            activeIcon: Icon(Icons.location_on),
             icon: Icon(Icons.location_on_outlined),
             label: 'Near Me',
           ),
           BottomNavigationBarItem(
+            activeIcon: Icon(Icons.lock_rounded),
             icon: Icon(Icons.lock_outline),
             label: 'Sign In',
           ),
           BottomNavigationBarItem(
+            activeIcon: Icon(Icons.star_outlined),
             icon: Icon(Icons.star_outline_outlined),
             label: 'Guidelines',
           ),
           BottomNavigationBarItem(
+            activeIcon: Icon(Icons.error_outlined),
             icon: Icon(Icons.error_outline),
             label: 'About',
           ),
         ],
+        // selectedItemColor: Theme.of(context).primaryColor,
         currentIndex: _selectedIndex,
-        // unselectedItemColor: Colors.blueGrey.shade300,
-        // selectedItemColor: Colors.green.shade600,
+        unselectedItemColor: Colors.blueGrey.shade300,
+        selectedItemColor: Colors.green.shade600,
         selectedFontSize: 13,
         unselectedFontSize: 13,
         iconSize: 28,
+        // backgroundColor: Colors.transparent,
+        // unselectedItemColor: Theme.of(context).focusColor.withOpacity(1),
         onTap: _onItemTapped,
         type: BottomNavigationBarType.fixed,
       ),
@@ -447,26 +458,26 @@ class _WebViewExampleState extends State<WebViewExample> {
         });
   }
 
-  Widget favoriteButton() {
-    return FutureBuilder<WebViewController>(
-        future: _controller.future,
-        builder: (BuildContext context,
-            AsyncSnapshot<WebViewController> controller) {
-          if (controller.hasData) {
-            return FloatingActionButton(
-              onPressed: () async {
-                final String url = (await controller.data!.currentUrl())!;
-                // ignore: deprecated_member_use
-                Scaffold.of(context).showSnackBar(
-                  SnackBar(content: Text('Favorited $url')),
-                );
-              },
-              child: const Icon(Icons.favorite),
-            );
-          }
-          return Container();
-        });
-  }
+  // Widget favoriteButton() {
+  //   return FutureBuilder<WebViewController>(
+  //       future: _controller.future,
+  //       builder: (BuildContext context,
+  //           AsyncSnapshot<WebViewController> controller) {
+  //         if (controller.hasData) {
+  //           return FloatingActionButton(
+  //             onPressed: () async {
+  //               final String url = (await controller.data!.currentUrl())!;
+  //               // ignore: deprecated_member_use
+  //               Scaffold.of(context).showSnackBar(
+  //                 SnackBar(content: Text('Favorited $url')),
+  //               );
+  //             },
+  //             child: const Icon(Icons.favorite),
+  //           );
+  //         }
+  //         return Container();
+  //       });
+  // }
 }
 
 enum MenuOptions {
@@ -487,7 +498,7 @@ enum MenuOptions {
 }
 
 class SampleMenu extends StatelessWidget {
-  SampleMenu(this.controller);
+  SampleMenu(this.controller, {Key? key}) : super(key: key);
 
   final Future<WebViewController> controller;
   final CookieManager cookieManager = CookieManager();
